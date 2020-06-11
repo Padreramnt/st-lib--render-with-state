@@ -1,0 +1,42 @@
+{
+	"author": "padreramnt",
+	"description": "@st-lib/render element node state management helper",
+	"dependencies": {
+		"@st-lib/emitter": "^1.0.2",
+		"tslib": "^1.9.3"
+	},
+	"devDependencies": {
+		"rimraf": "^3.0.1",
+		"typescript": "^3.5.1"
+	},
+	"files": [
+		"lib"
+	],
+	"keywords": [
+		"st-lib",
+		"render",
+		"state"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Padreramnt/st-lib--render-with-state"
+	},
+	"license": "MIT",
+	"main": "lib/index.js",
+	"module": "lib/index.js",
+	"name": "@st-lib/render-with-state",
+	"scripts": {
+		"build": "tsc -p ./tsconfig.json",
+		"prebuild": "rimraf -rf ./lib",
+		"prepublishOnly": "npm run build",
+		"prestart": "rimraf -rf ./lib",
+		"start": "tsc -p ./tsconfig.json -w",
+		"start:tsc": "tsc",
+		"test": "tsc -p ./tsconfig.json --noEmit"
+	},
+	"types": "lib/index.d.ts",
+	"version": "1.0.0",
+	"peerDependencies": {
+		"@st-lib/render": "^1.0.3"
+	}
+}

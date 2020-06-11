@@ -1,0 +1,38 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "ESNext",
+		"lib": [
+			"ESNext",
+			"ES2020",
+			"DOM"
+		],
+		"declaration": true,
+		"sourceMap": false,
+		"rootDir": "./src",
+		"outDir": "./lib",
+		"importHelpers": true,
+		"strict": true,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"strictBindCallApply": true,
+		"strictPropertyInitialization": true,
+		"noImplicitThis": true,
+		"alwaysStrict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"moduleResolution": "node",
+		"removeComments": false,
+		"pretty": true,
+		"esModuleInterop": true
+	},
+	"include": [
+		"./src"
+	],
+	"exclude": [
+		"./lib"
+	]
+}
