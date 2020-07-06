@@ -1,42 +1,82 @@
-import { created, render } from '@st-lib/render'
-import Emitter from '@st-lib/emitter'
+import { context, rerender } from '@st-lib/render'
 
-class State<T> extends Emitter<{ change(): void }> {
-	value: T
-	constructor(value: T) {
-		super()
-		this.value = value
+const cache = new WeakMap()
+
+function initState(ref: object, init: any) {
+	if (!cache.has(ref)) {
+		cache.set(ref, init)
+		return init
 	}
+	return cache.get(ref)
 }
-
-const nodesStateMap = new WeakMap<object, State<any>>()
-
-function createState<T>(ref: object, init: T): State<T> {
-	let o = nodesStateMap.get(ref)
-	if (o) return o
-	o = new State(init)
-	nodesStateMap.set(ref, o)
-	return o
-}
-
-export default function withState<R extends Element, T>(init: T, content: (state: T, setState: (newState: T) => void, ref: R | null) => void) {
-	return (ref: R | null) => {
+function setState() { }
+export function withState<R extends Element, T>(init: T, content: (state: T, setState: (state: T) => void, ref: R | null) => void) {
+	return function renderer(ref: R) {
 		if (ref) {
-			const state = createState(ref, init)
-			function setState(value: T) {
-				state.value = value
-				state.emit('change')
-			}
-			content(state.value, setState, ref)
-			created(() => {
-				state.on('change', () => {
-					render(ref, ref => {
-						content(state.value, setState, ref)
-					})
-				})
-			})
+			const state = initState(ref, init)
+			content(state, function setState(state) {
+				cache.set(ref, state)
+				rerender(ref)
+			}, ref)
 		} else {
-			content(init, function setState(_value) { }, ref)
+			content(init, setState, ref)
 		}
 	}
 }
+
+const counter = new WeakMap<object, number>()
+const usedStates = new WeakMap<object, Record<number, any>>()
+
+function count(ref: object) {
+	if (!counter.has(ref)) {
+		counter.set(ref, 0)
+	} else {
+		counter.set(ref, counter.get(ref)! + 1)
+	}
+	return counter.get(ref)!
+}
+
+function reset(ref: object) {
+	counter.delete(ref)
+}
+
+export type UseState<T> = [
+	T,
+	(newState: T) => void,
+]
+/**
+ * use element node state
+ * @param init initial state value
+ * @param when state guard
+ */
+export function useState<T>(init: T, when?: (newValue: T, oldValue: T) => any): UseState<T> {
+	const ctx = context.peek()
+	if (!ctx || !ctx.target) {
+		return [init, setState]
+	}
+	const { target } = ctx
+	const index = count(target)
+	let stateRec
+	if (usedStates.has(target)) {
+		stateRec = usedStates.get(target)!
+	} else {
+		stateRec = {}
+		usedStates.set(target, stateRec)
+	}
+	let state: T
+	if (index in stateRec) {
+		state = stateRec[index]
+	} else {
+		state = init
+		stateRec[index] = state
+	}
+	ctx.pushElementCleanupCallback(reset)
+	return [state, function setState(newState: T) {
+		if (typeof when !== 'function' || when(newState, state)) {
+			stateRec[index] = newState
+			rerender(target)
+		}
+	}]
+}
+
+export default withState

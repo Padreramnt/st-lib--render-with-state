@@ -2,7 +2,6 @@
 	"author": "padreramnt",
 	"description": "@st-lib/render element node state management helper",
 	"dependencies": {
-		"@st-lib/emitter": "^1.0.2",
 		"tslib": "^1.9.3"
 	},
 	"devDependencies": {
@@ -37,6 +36,6 @@
 	"types": "lib/index.d.ts",
 	"version": "1.0.0",
 	"peerDependencies": {
-		"@st-lib/render": "^1.0.3"
+		"@st-lib/render": "^1.0.10"
 	}
 }

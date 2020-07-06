@@ -2,17 +2,10 @@
 # yarn lockfile v1
 
 
-"@st-lib/emitter@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@st-lib/emitter/-/emitter-1.0.2.tgz#38a81cada4a03570d7ff6e0aec32ecd2e3df5ac9"
-  integrity sha512-52HfSVfsff/G2LX1CI8+zlWx0YIlsTM6LdID8s0Imx41I52QnsaPFEPyKffAWqiBsvm5QHslmks5a9qWmylIcw==
-  dependencies:
-    tslib "^1.9.3"
-
-"@st-lib/render@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@st-lib/render/-/render-1.0.3.tgz#c133a476489a8a0d7f2b5a1d1af2265e17e8be46"
-  integrity sha512-FNwZPsuFlSYac3tEItDZQ1PfA0Dp61dEl/Npt8JX/ZjMjFWbMYNp0pfWFMzEpaE/nAK9owadDQt8Nf0xb6BigA==
+"@st-lib/render@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@st-lib/render/-/render-1.0.10.tgz#556361fe89abd449ca8723c930985b7adf6171df"
+  integrity sha512-Hp8+3gJntHY0JYtaQNWBKM4Y67/UehzM0bmfRlUjy364NkHpjwQwyv6sRClQ2V4jLfAqx048G+9BYuVxesciCw==
   dependencies:
     tslib "^1.10.0"
 
